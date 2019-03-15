@@ -4,12 +4,21 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import UI.screensFramework.ScreensController;
+import logs.Logger;
 
 
 public class main extends Application
 {
     public static String mainScreenID = "main";
     public static String mainScreenFile = "/UI/mainScreen/mainScreen.fxml";
+
+
+    //Everything that needs to be done before
+    //the application closes should be in here
+    private void closeDownOperations()
+    {
+        Logger.getInstance().createAllLogFiles();
+    }
 
 
     @Override
@@ -28,6 +37,14 @@ public class main extends Application
         primaryStage.setScene(scene);
         //primaryStage.setMaximized(true);
         primaryStage.show();
+
+
+        //call closeDownOperations() before shutdown
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            closeDownOperations();
+            primaryStage.close();
+        });
 
 
     }
