@@ -83,6 +83,7 @@ class Log
     }
 
 
+
     //Return a copy of Log to preserve Log integrity.
     //This will be useful if we want to display the log
     //somewhere else in the program without having to worry

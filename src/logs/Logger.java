@@ -64,6 +64,7 @@ public class Logger
     }
 
 
+
     public void logMessage(String message)
     {
         eventLog.logMessage(message);
