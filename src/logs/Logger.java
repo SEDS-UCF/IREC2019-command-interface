@@ -4,7 +4,7 @@ package logs;
 //that will be written to standard text files throughout the program.
 //We also provide get methods so we can view the logs live if we need to.
 //We maintain three different logs throughout the program.
-//The event log will only hold discreet non-error actions we perform.
+//The event log will only hold discrete non-error actions we perform.
 //The error log will only hold errors which can be exceptions or
 //defined errors/assertion violations.
 //The master log will hold all of the messages in each log
