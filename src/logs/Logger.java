@@ -12,9 +12,9 @@ package logs;
 
 public class Logger
 {
-    private final String errorLogPath = "errorLot.txt";
-    private final String eventLogPath = "eventLot.txt";
-    private final String masterLogPath = "masterLot.txt";
+    private final String errorLogPath = "errorLog.txt";
+    private final String eventLogPath = "eventLog.txt";
+    private final String masterLogPath = "masterLog.txt";
 
 
     private static Logger logger = null;
