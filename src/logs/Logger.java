@@ -10,6 +10,9 @@ package logs;
 //The master log will hold all of the messages in each log
 
 
+import javafx.beans.property.SimpleStringProperty;
+
+
 public class Logger
 {
     private final String errorLogPath = "errorLog.txt";
@@ -35,7 +38,7 @@ public class Logger
     {
         if(logger == null)
         {
-            return new Logger();
+            logger = new Logger();
         }
 
         return logger;
@@ -76,6 +79,39 @@ public class Logger
         errorLog.logMessage(message);
         masterLog.logMessage(message);
     }
+
+
+    public SimpleStringProperty getObservableMasterLog()
+    {
+        return masterLog.observableLog;
+    }
+
+    public SimpleStringProperty getObservableErrorLog()
+    {
+        return errorLog.observableLog;
+    }
+
+    public SimpleStringProperty getObservableEventLog()
+    {
+        return eventLog.observableLog;
+    }
+
+
+    public void clearMasterLog()
+    {
+        masterLog.clearObservableLog();
+    }
+
+    public void clearErrorLog()
+    {
+        errorLog.clearObservableLog();
+    }
+
+    public void clearEventLog()
+    {
+        eventLog.clearObservableLog();
+    }
+
 
 
 

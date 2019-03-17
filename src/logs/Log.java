@@ -1,5 +1,7 @@
 package logs;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,10 +22,13 @@ class Log
     private ArrayList<String> log;
     private String filePath;
 
+    SimpleStringProperty observableLog;
+
     Log(String path)
     {
-        log = new ArrayList<>();
-        filePath = path;
+        this.log = new ArrayList<>();
+        this.filePath = path;
+        this.observableLog = new SimpleStringProperty("");
     }
 
 
@@ -38,9 +43,11 @@ class Log
     void createLogFile()
     {
         try {
+
             FileWriter writer = new FileWriter(filePath);
 
             writer.write("Log Started At: " + LocalDateTime.now().toString() + "\n");
+
 
             for (String aLog : log)
             {
@@ -75,6 +82,12 @@ class Log
     void logMessage(String message)
     {
         log.add(formatMessage(message));
+        observableLog.setValue(observableLog.get() + "\n" + formatMessage(message));
+    }
+
+    void clearObservableLog()
+    {
+        observableLog.setValue("");
     }
 
     String getLogMessage(int index)
@@ -83,14 +96,9 @@ class Log
     }
 
 
-
-    //Return a copy of Log to preserve Log integrity.
-    //This will be useful if we want to display the log
-    //somewhere else in the program without having to worry
-    //about whether it is altered in any way.
     ArrayList<String> getAllLogMessages()
     {
-        return new ArrayList<>(log);
+        return log;
     }
 
 
