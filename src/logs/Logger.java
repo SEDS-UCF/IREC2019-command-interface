@@ -76,8 +76,8 @@ public class Logger
 
     public void logErrorMessage(String message)
     {
-        errorLog.logMessage(message);
-        masterLog.logMessage(message);
+        errorLog.logMessage("[Error] " + message);
+        masterLog.logMessage("[Error] " + message);
     }
 
 

@@ -55,6 +55,7 @@ class Log
                 writer.write("\n");
             }
 
+            writer.write("Log Closed At: " + LocalDateTime.now().toString() + "\n");
             writer.write("EOF");
 
             writer.close();
@@ -83,6 +84,7 @@ class Log
     {
         log.add(formatMessage(message));
         observableLog.setValue(observableLog.get() + "\n" + formatMessage(message));
+        createLogFile();
     }
 
     void clearObservableLog()
