@@ -17,7 +17,7 @@ public class main extends Application
     //the application closes should be in here
     private void closeDownOperations()
     {
-        Logger.getInstance().createAllLogFiles();
+        Logger.getInstance().closeAllLogFiles();
     }
 
 
