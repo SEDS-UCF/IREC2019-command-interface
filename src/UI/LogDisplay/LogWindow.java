@@ -16,9 +16,9 @@ import logs.Logger;
 public class LogWindow
 {
     private static boolean isOpen = false;
-    private final String masterTabName = "Master Tab";
-    private final String errorTabName = "Error Tab";
-    private final String eventTabName = "Event Tab";
+    private final String masterTabName = "Master Log";
+    private final String errorTabName = "Error Log";
+    private final String eventTabName = "Event Log";
 
     private TextArea getTabContent(Tab tab)
     {
@@ -29,7 +29,13 @@ public class LogWindow
         layout.setPadding(new Insets(10,10,10,10));
 
         TextArea textArea = new TextArea();
-        textArea.setPrefHeight(1000);
+
+        //This is to make sure the text area always
+        //tries to fill all available height. The right
+        //way to do this would be to bind the height
+        //property of the text area with the height
+        //of the VBox container but this is easier.
+        textArea.setPrefHeight(6000);
 
         layout.getChildren().add(textArea);
 
