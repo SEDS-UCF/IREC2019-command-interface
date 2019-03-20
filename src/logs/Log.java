@@ -21,6 +21,7 @@ class Log
 {
     private ArrayList<String> log;
     private String filePath;
+    private FileWriter writer;
 
     SimpleStringProperty observableLog;
 
@@ -29,6 +30,21 @@ class Log
         this.log = new ArrayList<>();
         this.filePath = path;
         this.observableLog = new SimpleStringProperty("");
+        startLogFile();
+
+    }
+
+    private void startLogFile()
+    {
+        try {
+            this.writer = new FileWriter(filePath);
+
+            this.writer.write("Log Opened At: " + LocalDateTime.now().toString() + "\n");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -37,34 +53,37 @@ class Log
         return filePath;
     }
 
-    //each log should be able to write itself to a text file using some standard formatting
-    //In this case, we time stamp the file and just write each log message line by line to
-    //whatever directory/filename is specified on the creation of the specific log instance
-    void createLogFile()
+    void writeMessageToFile(String message)
     {
         try {
 
-            FileWriter writer = new FileWriter(filePath);
+            writer.write(message + "\n");
 
-            writer.write("Log Started At: " + LocalDateTime.now().toString() + "\n");
-
-
-            for (String aLog : log)
-            {
-                writer.write(aLog);
-                writer.write("\n");
+            try {
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            writer.write("Log Closed At: " + LocalDateTime.now().toString() + "\n");
-            writer.write("EOF");
-
-            writer.close();
 
         } catch (IOException e)
         {
             System.out.println("Something went wrong trying to create the " + filePath + " log");
         }
     }
+
+    void closeLogFile()
+    {
+        try {
+            writer.write("Log Closed At: " + LocalDateTime.now().toString() + "\n");
+            writer.write("EOF");
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     //Prefix every log message with the current time.
     //we can omit the data since that is written once
@@ -82,9 +101,10 @@ class Log
 
     void logMessage(String message)
     {
-        log.add(formatMessage(message));
+        String formattedMessage = formatMessage(message);
+        log.add(formattedMessage);
         observableLog.setValue(observableLog.get() + "\n" + formatMessage(message));
-        createLogFile();
+        writeMessageToFile(formattedMessage);
     }
 
     void clearObservableLog()

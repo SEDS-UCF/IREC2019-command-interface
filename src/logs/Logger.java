@@ -44,26 +44,26 @@ public class Logger
         return logger;
     }
 
-    public void createErrorLogFile()
+    public void closeErrorLogFile()
     {
-        errorLog.createLogFile();
+        errorLog.closeLogFile();
     }
 
-    public void createEventLogFile()
+    public void closeEventLogFile()
     {
-        eventLog.createLogFile();
+        eventLog.closeLogFile();
     }
 
-    public void createMasterLogFile()
+    public void closeMasterLogFile()
     {
-        masterLog.createLogFile();
+        masterLog.closeLogFile();
     }
 
-    public void createAllLogFiles()
+    public void closeAllLogFiles()
     {
-        createErrorLogFile();
-        createEventLogFile();
-        createMasterLogFile();
+        closeErrorLogFile();
+        closeEventLogFile();
+        closeMasterLogFile();
     }
 
 
