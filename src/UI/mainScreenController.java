@@ -1,10 +1,12 @@
-package UI.mainScreen;
+package UI;
 
 
+import UI.LogDisplay.LogWindow;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import logs.Logger;
 import netwerking.networkUtils;
 import UI.screensFramework.ControlledScreen;
 import UI.screensFramework.ScreensController;
@@ -13,11 +15,12 @@ public class mainScreenController implements ControlledScreen
 {
 
     private ScreensController myController;
-    networkUtils theThing = new networkUtils();
+
+    LogWindow logWindow;
+    networkUtils theThing = networkUtils.getInstance();
 
 
-    @FXML
-    Button netButt, close;
+
 
 
     @Override
@@ -33,10 +36,17 @@ public class mainScreenController implements ControlledScreen
     public void initialize()
     {
         start();
-        netButt.setOnAction(e -> getFactory());
-        close.setOnAction(e -> closeCon());
     }
 
+    public void logMessage()
+    {
+        Logger.getInstance().logMessage("This is a sample Log message");
+    }
+
+    private void getLogWindow()
+    {
+        logWindow.createLogWindow();
+    }
 
 
     private void closeCon()

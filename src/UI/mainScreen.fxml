@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@CSS/mainStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.mainScreenController">
+    <children>
+        <BorderPane stylesheets="@CSS/mainStyle.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+            </top>
+            <top>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Options">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="DONT CLICK ME" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+            <center>
+                <JFXTabPane>
+                    <Tab closable="false" text="Pre Launch">
+                        <fx:include fx:id="preLaunchSource" source="preLaunch/preLaunchScreen.fxml" />
+                    </Tab>
+                    <Tab closable="false" text="Post Launch">
+                        <fx:include fx:id="postLaunchSource" source="postLaunch/postLaunchScreen.fxml" />
+                    </Tab>
+                </JFXTabPane>
+            </center>
+            <left>
+
+            </left>
+            <right>
+                <VBox alignment="CENTER" prefHeight="1000.0" prefWidth="800.0" spacing="20" BorderPane.alignment="CENTER">
+                    <children>
+                        <Pane minHeight="450.0" minWidth="600.0" style="-fx-background-color: #2A2E37;">
+                            <children>
+                                <ImageView fx:id="imageView">
+                                </ImageView>
+                            </children></Pane>
+                        <TextArea fx:id="Console" editable="false" promptText="Console" wrapText="true" VBox.vgrow="ALWAYS">
+
+                        </TextArea>
+                    </children>
+                    <padding>
+                        <Insets bottom="40" right="40.0" />
+                    </padding>
+                </VBox>
+            </right>
+        </BorderPane>
+    </children>
+</AnchorPane>

@@ -115,7 +115,7 @@ public class LogWindow
         });
 
         Scene scene = new Scene(mainLayout);
-        scene.getStylesheets().add("CSS/mainStyle.css");
+        scene.getStylesheets().add("UI/CSS/mainStyle.css");
         window.setScene(scene);
         window.show();
 
