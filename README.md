@@ -17,6 +17,6 @@ repository.
 * Custom user interface
 
 ## Dependencies
-* [Kryonet](https://github.com/EsotericSoftware/kryonet) for the network code
 * [JFoenix](https://github.com/jfoenixadmin/JFoenix) for some of the user interface components
+* [MessagePack](https://msgpack.org/index.html) for message serialization
 
