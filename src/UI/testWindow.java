@@ -1,7 +1,6 @@
 package UI;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,22 +8,21 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import yamFactory.yamManager;
+import logs.Logger;
+import netwerking.Netwerk;
 
-import java.io.IOException;
 
 //Straight up AIDS
 public class testWindow
 {
+
     public void getWindow()
     {
         Stage window = new Stage();
         window.setTitle("Testing n Stuff");
         window.setHeight(600);
         window.setWidth(500);
-        window.initModality(Modality.APPLICATION_MODAL);
 
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(10,10,10,10));
@@ -32,12 +30,24 @@ public class testWindow
         VBox centerLayout = new VBox(10);
         centerLayout.setAlignment(Pos.CENTER);
 
-        JFXButton makeYam = new JFXButton("Make Yam");
-        makeYam.setTooltip(new Tooltip("Check console for output"));
 
-        makeYam.setOnAction(e -> makeAYam());
+        JFXButton sendYam = new JFXButton("Send Yam");
+        sendYam.setTooltip(new Tooltip("Send a yam"));
 
-        centerLayout.getChildren().add(makeYam);
+        JFXButton connectButton = new JFXButton("Connect");
+        connectButton.setTooltip(new Tooltip("Connect socket"));
+
+        JFXButton checkIn = new JFXButton("Check In");
+        connectButton.setTooltip(new Tooltip("Check In"));
+
+        sendYam.setOnAction(e -> sendYam());
+
+        connectButton.setOnAction(e -> connect());
+
+        checkIn.setOnAction(e -> checkInput());
+
+
+        centerLayout.getChildren().addAll(sendYam,connectButton,checkIn);
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
@@ -58,16 +68,25 @@ public class testWindow
         window.show();
     }
 
-    void makeAYam()
+    void checkInput()
     {
-        Platform.runLater(() -> {
-            yamManager yamer = new yamManager();
-            try {
-                yamer.test();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        if(!Netwerk.getInstance().inQueue.isEmpty())
+        {
+            Logger.getInstance().logMessage(Netwerk.getInstance().inQueue.poll().getMsg().toJson());
+        }
+        else
+        {
+            Logger.getInstance().logMessage("There is nothing in the queue");
+        }
+    }
 
+    void connect()
+    {
+        Netwerk.getInstance().connect("lax.benrstraw.xyz",42069);
+    }
+
+    private void sendYam()
+    {
+        Netwerk.getInstance().test();
     }
 }

@@ -23,7 +23,8 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="DONT CLICK ME" />
+                                <MenuItem mnemonicParsing="false" text="Test Action" onAction="#testAction" />
+                                <MenuItem mnemonicParsing="false" text="Log" onAction="#getLogWindow"/>
                             </items>
                         </Menu>
                     </menus>
