@@ -41,7 +41,8 @@ class Log
 
             this.writer.write("Log Opened At: " + LocalDateTime.now().toString() + "\n");
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
@@ -53,6 +54,8 @@ class Log
         return filePath;
     }
 
+    //As soon as we have a message to write we should immediately
+    //flush the buffer in case of a crash
     void writeMessageToFile(String message)
     {
         try {
@@ -67,7 +70,8 @@ class Log
 
         } catch (IOException e)
         {
-            System.out.println("Something went wrong trying to create the " + filePath + " log");
+            e.printStackTrace();
+            System.out.println("Something went wrong trying to create the " + this.filePath + " log");
         }
     }
 
