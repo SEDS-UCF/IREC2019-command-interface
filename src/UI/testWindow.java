@@ -40,6 +40,11 @@ public class testWindow
         JFXButton checkIn = new JFXButton("Check In");
         connectButton.setTooltip(new Tooltip("Check In"));
 
+        JFXButton closeConnectionButton = new JFXButton("Disconnect");
+        closeConnectionButton.setTooltip(new Tooltip("Close Socket"));
+
+        closeConnectionButton.setOnAction(e -> closeConnection());
+
         sendYam.setOnAction(e -> sendYam());
 
         connectButton.setOnAction(e -> connect());
@@ -47,7 +52,7 @@ public class testWindow
         checkIn.setOnAction(e -> checkInput());
 
 
-        centerLayout.getChildren().addAll(sendYam,connectButton,checkIn);
+        centerLayout.getChildren().addAll(sendYam,connectButton,checkIn,closeConnectionButton);
 
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
@@ -68,11 +73,16 @@ public class testWindow
         window.show();
     }
 
+    void closeConnection()
+    {
+        Netwerk.getInstance().closeConnection();
+    }
+
     void checkInput()
     {
         if(!Netwerk.getInstance().inQueue.isEmpty())
         {
-            Logger.getInstance().logMessage(Netwerk.getInstance().inQueue.poll().getMsg().toJson());
+            Logger.getInstance().logMessage(Netwerk.getInstance().inQueue.poll().getYam().toJson());
         }
         else
         {

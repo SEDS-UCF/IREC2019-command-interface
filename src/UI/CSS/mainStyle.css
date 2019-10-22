@@ -20,6 +20,21 @@ the custom styles for each component and
     -fx-background-color: -fx-primary;
 }
 
+.jfx-button {
+    -fx-text-fill:  -fx-secondary;
+    -fx-background-radius: 0;
+    -fx-background-color: -fx-primary;
+    -fx-border-color:  -fx-secondary;
+    -fx-border-width: 1;
+    -fx-background-insets: 1;
+    -fx-font-size: 14;
+}
+
+.jfx-button:hover {
+    -fx-text-fill: white;
+    -fx-border-color:  white;
+}
+
 /*TablPane styling*/
 .tab{
     -fx-background-color: -fx-primary;
@@ -178,6 +193,15 @@ the custom styles for each component and
 
 .jfx-tab-pane .tab-selected-line {
     -fx-background-color: -fx-blue;
+}
+
+
+.jfx-tab-pane .tab-label:selected {
+    -fx-text-fill: -fx-secondary;
+}
+
+.jfx-tab-pane .tab-label {
+    -fx-text-fill: -fx-secondary;
 }
 
 

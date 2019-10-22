@@ -1,10 +1,12 @@
 package UI.LogDisplay;
 
 
+import com.jfoenix.controls.JFXButton;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -29,6 +31,14 @@ public class LogWindow
         layout.setPadding(new Insets(10,10,10,10));
 
         TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+
+
+        Logger.getInstance().getObservableMasterLog().addListener((observable, oldValue, newValue) -> {
+            textArea.selectPositionCaret(textArea.getLength());
+            textArea.deselect();
+        });
+
 
         //This is to make sure the text area always
         //tries to fill all available height. The right
@@ -55,8 +65,8 @@ public class LogWindow
         isOpen = true;
 
         Stage window = new Stage();
-        window.setHeight(600);
-        window.setWidth(500);
+        window.setHeight(700);
+        window.setWidth(600);
         window.setTitle("Logs");
 
         VBox mainLayout = new VBox(10);
@@ -64,9 +74,8 @@ public class LogWindow
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
 
-        Button clearButton = new Button("Clear");
-        Button closeButton = new Button("Close");
-
+        JFXButton clearButton = new JFXButton("Clear");
+        JFXButton closeButton = new JFXButton("Close");
 
         buttonBox.getChildren().addAll(clearButton,closeButton);
 
@@ -121,7 +130,6 @@ public class LogWindow
 
         window.setOnCloseRequest(event -> {
             event.consume();
-            System.out.println("We got here");
             isOpen = false;
             window.close();
         });
