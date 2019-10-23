@@ -17,8 +17,16 @@ import netwerking.Netwerk;
 public class testWindow
 {
 
+    private static boolean isOpen = false;
+
+
     public void getWindow()
     {
+        if(isOpen)
+        {
+            return;
+        }
+
         Stage window = new Stage();
         window.setTitle("Testing n Stuff");
         window.setHeight(600);
@@ -61,7 +69,16 @@ public class testWindow
 
         buttonBox.getChildren().add(closeButton);
 
-        closeButton.setOnAction(e -> window.close());
+        closeButton.setOnAction(e -> {
+            isOpen = false;
+            window.close();
+        });
+
+        window.setOnCloseRequest(e -> {
+                e.consume();
+                isOpen = false;
+                window.close();
+        });
 
         mainLayout.setCenter(centerLayout);
         mainLayout.setBottom(buttonBox);
@@ -70,6 +87,9 @@ public class testWindow
         scene.getStylesheets().add("UI/CSS/mainStyle.css");
         window.setScene(scene);
         mainLayout.requestFocus();
+
+        isOpen = true;
+
         window.show();
     }
 
