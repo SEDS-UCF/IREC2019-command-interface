@@ -1,5 +1,6 @@
 package netwerking;
 
+import javafx.application.Platform;
 import logs.Logger;
 import msgPack.Yam;
 import org.msgpack.core.MessagePack;
@@ -13,6 +14,7 @@ import org.msgpack.value.ValueFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -66,7 +68,7 @@ public class Netwerk
         return netwerk;
     }
 
-    //Because we want to concurrent read and write functionality from
+    //Because we want concurrent read and write functionality from
     //the network interface, we implement a read and write thread to
     //wait for incoming and outgoing traffic. For the read thread, the
     //output stream is passed directly to the message pack library to
@@ -81,7 +83,8 @@ public class Netwerk
             while (!sock.isClosed())
             {
                 try {
-                    if(unpack.hasNext()) {
+                    if(unpack.hasNext())
+                    {
                         ImmutableArrayValue msg = unpack.unpackValue().asArrayValue();
                         Yam newYam = new Yam(
                                 msg.get(0).asIntegerValue().asInt(),
@@ -103,12 +106,12 @@ public class Netwerk
     }
 
 
-    //Because we want to concurrent read and write functionality from
+    //Because we want concurrent read and write functionality from
     //the network interface, we implement a read and write thread to
     //wait for incoming and outgoing traffic. For the write thread,
     //we simply check to see if the output queue contains any 'Yam'
     //objects and if there are, we pass it to the output stream and
-    //pop that 'Yam' from the output queue.
+    //pop the 'Yam' from the output queue.
     class NetwerkWriteThread extends Thread {
         @Override
         public void run() {
@@ -144,27 +147,37 @@ public class Netwerk
             return;
         }
 
-        try {
-            sock = new Socket(host, port);
-            sock.setSoTimeout(5000);
+        Thread thread = new Thread(() -> {
+            try {
+                sock = new Socket();
+                sock.connect(new InetSocketAddress(host, port), 2500);
 
-            Logger.getInstance().logMessage("Socket has been connected at " + host + ":" + port);
 
-            dis = new DataInputStream(sock.getInputStream());
-            dos = new DataOutputStream(sock.getOutputStream());
-            unpack = MessagePack.newDefaultUnpacker(dis);
-            pack = MessagePack.newDefaultPacker(dos);
+                Logger.getInstance().logMessage("Socket has been connected at " + host + ":" + port);
 
-            inQueue.clear();
-            outQueue.clear();
+                dis = new DataInputStream(sock.getInputStream());
+                dos = new DataOutputStream(sock.getOutputStream());
+                unpack = MessagePack.newDefaultUnpacker(dis);
+                pack = MessagePack.newDefaultPacker(dos);
 
-            readThread = new NetwerkReadThread();
-            writeThread = new NetwerkWriteThread();
-            readThread.start();
-            writeThread.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                inQueue.clear();
+                outQueue.clear();
+
+                readThread = new NetwerkReadThread();
+                writeThread = new NetwerkWriteThread();
+                readThread.start();
+                writeThread.start();
+
+            } catch (IOException e)
+            {
+                Logger.getInstance().logErrorMessage("Socket timed out, connection at " + host + ":" + port + " failed");
+                sock = null;
+                e.printStackTrace();
+            }
+        });
+
+        thread.start();
+
     }
 
     //Before the socket is closed we have to close the IO streams.
@@ -210,7 +223,7 @@ public class Netwerk
 
         //Yam empty = new Yam(1,2, new Value[] {});
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 1; i++) {
             Yam testYam = new Yam(1, i, args);
             //this.outQueue.add(empty);
             this.outQueue.add(testYam);
