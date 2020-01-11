@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -23,8 +25,8 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Test Action" onAction="#testAction" />
-                                <MenuItem mnemonicParsing="false" text="Log" onAction="#getLogWindow"/>
+                                <MenuItem mnemonicParsing="false" onAction="#testAction" text="Test Action" />
+                                <MenuItem mnemonicParsing="false" onAction="#getLogWindow" text="Log" />
                             </items>
                         </Menu>
                     </menus>
@@ -46,6 +48,12 @@
             <right>
                 <VBox alignment="CENTER" prefHeight="1000.0" prefWidth="800.0" spacing="20" BorderPane.alignment="CENTER">
                     <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Label text="WIFI Status:" />
+                         <Label fx:id="wifiStatusLabel" text=" " />
+                     </children>
+                  </HBox>
                         <Pane minHeight="450.0" minWidth="600.0" style="-fx-background-color: #2A2E37;">
                             <children>
                                 <ImageView fx:id="imageView">
